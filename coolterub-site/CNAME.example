@@ -1,0 +1,3 @@
+# Replace this with your FreeDNS hostname (remove this comment and save as `CNAME`)
+# Example: myname.example.freeddns.afraid.org
+your-subdomain.example.freeddns.afraid.org
