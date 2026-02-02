@@ -8,6 +8,26 @@ FreeDNS setup instructions
 
 4. Push the `CNAME` file to your repository and enable GitHub Pages for the branch/folder you want (usually `gh-pages` or `main` + `/docs` or `/`).
 
+Apex domain (root / example.com) setup with A records
+
+- If you want to use an **apex domain** (for example: `Albertcoolter.pl`) you should create A records at your DNS provider that point the domain to GitHub Pages' IP addresses:
+
+  - 185.199.108.153
+  - 185.199.109.153
+  - 185.199.110.153
+  - 185.199.111.153
+
+- After adding the A records, create a `CNAME` file in your published site branch (for example, in the `gh-pages` branch root) containing the single line `Albertcoolter.pl`. Then enable the custom domain in the repository Pages settings or wait for GitHub Pages to detect the `CNAME` file automatically.
+
+Cloudflare / Worker-backed hosting (alternative)
+
+- If you prefer to serve the site via the Cloudflare Worker proxy, you can keep the apex domain pointed to Cloudflare's DNS and add a route in Cloudflare (or use a CNAME/flattening) to forward to the Worker or to GitHub Pages. See `proxy-worker/README.md` for details.
+
+- For apex domains some DNS providers support ALIAS/ANAME records; if yours does, you can use those instead of multiple A records.
+
+Notes:
+- DNS changes can take some time to propagate (minutes to hours). If you want me to add the `CNAME` file for `Albertcoolter.pl` to the published branch now, say "Add CNAME to gh-pages" and I will add it and verify the Pages settings.
+
 Automating CNAME file creation (script)
 
 - A helper script `setup_freedns.sh` is included in this directory to create the `CNAME` file for you and optionally commit & push it to git.
