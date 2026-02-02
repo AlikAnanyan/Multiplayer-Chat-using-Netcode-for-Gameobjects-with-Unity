@@ -1,0 +1,17 @@
+{
+  "name": "coolterub-proxy-server",
+  "version": "0.1.0",
+  "description": "Simple proxy to fetch and sanitize remote pages for embedding in CoolterUB viewer",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "node-fetch": "^2.6.7",
+    "helmet": "^6.0.1",
+    "express-rate-limit": "^6.7.0",
+    "cheerio": "^1.0.0-rc.12",
+    "dotenv": "^16.1.4"
+  }
+}
