@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>CoolterUB</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="container">
+    <h1 class="logo" aria-label="CoolterUB logo">
+      <svg width="220" height="64" viewBox="0 0 220 64" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="logoTitle">
+        <title id="logoTitle">CoolterUB logo — AC</title>
+        <rect width="220" height="64" rx="12" fill="#FFEB3B"/>
+        <text x="50%" y="55%" dominant-baseline="middle" text-anchor="middle" font-family="Inter, Roboto, Arial, sans-serif" font-weight="800" font-size="34" fill="#111">AC</text>
+      </svg>
+    </h1>
+
+    <form id="searchForm" action="https://duckduckgo.com/" method="get" role="search">
+      <input type="text" name="q" placeholder="Search with DuckDuckGo" autocomplete="off" autofocus />
+      <button type="submit">Search</button>
+    </form>
+
+    <div class="controls">
+      <button id="blankToggle" type="button">Blank Screen</button>
+      <label class="open-new"><input type="checkbox" id="openInNewTab"> Open results in new tab</label>
+    </div>
+
+    <p class="note">Note: This page does not remove or modify browser or Google activity/history. Use private/incognito mode for more privacy.</p>
+  </div>
+
+  <div id="blankOverlay" class="overlay hidden">
+    <button id="returnBtn">Return</button>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
