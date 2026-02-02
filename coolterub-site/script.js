@@ -2,6 +2,8 @@
 const form = document.getElementById('searchForm');
 const openInNewTab = document.getElementById('openInNewTab');
 const resultsEl = document.getElementById('results');
+const engineSelect = document.getElementById('engineSelect');
+const inlineResults = document.getElementById('inlineResults');
 
 function clearResults(){
   resultsEl.innerHTML = '';
@@ -55,14 +57,12 @@ function escapeAttr(s){
   return String(s).replace(/"/g,'&quot;');
 }
 
-const engineSelect = document.getElementById('engineSelect');
-const inlineResults = document.getElementById('inlineResults');
-
 form.addEventListener('submit', function(e){
   const data = new FormData(form);
   const qs = new URLSearchParams(data).toString();
   const query = data.get('q') || '';
   const engine = engineSelect ? engineSelect.value : 'ddg';
+  // Build engine URL
   const engineUrls = {
     ddg: 'https://duckduckgo.com/?q=',
     google: 'https://www.google.com/search?q=',
@@ -73,6 +73,7 @@ form.addEventListener('submit', function(e){
   e.preventDefault();
   if (!query.trim()){ clearResults(); return; }
 
+  // If inline results are requested and engine is DuckDuckGo, use Instant Answers
   if (inlineResults && inlineResults.checked && engine === 'ddg'){
     showLoading();
     const apiUrl = 'https://api.duckduckgo.com/?' + new URLSearchParams({q: query, format: 'json', no_html: '1', skip_disambig: '1'});
@@ -83,6 +84,7 @@ form.addEventListener('submit', function(e){
     return;
   }
 
+  // Otherwise, open full results in a new tab (no proxy)
   const a = document.createElement('a');
   a.href = targetUrl;
   a.target = '_blank';
