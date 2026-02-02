@@ -31,6 +31,7 @@
       <button id="blankToggle" type="button">Blank Screen</button>
       <label class="open-new"><input type="checkbox" id="openInNewTab"> Open results in new tab</label>
       <label class="inline-results"><input type="checkbox" id="inlineResults"> Show results on this page (DuckDuckGo only)</label>
+      <label class="use-proxy"><input type="checkbox" id="useProxy"> Use in-site viewer (proxy preferred)</label>
     </div>
 
     <p class="note">Note: This page does not remove or modify browser or Google activity/history. Use private/incognito mode for more privacy.</p>
@@ -38,6 +39,12 @@
 
     <!-- Inline DuckDuckGo Instant Answer results -->
     <div id="results" class="results hidden" aria-live="polite"></div>
+  </div>
+
+  <!-- Main iframe viewer (vapor-like) -->
+  <div id="viewer">
+    <div id="loading-overlay" class="hidden"><div class="loader">Loading…</div></div>
+    <iframe id="content-frame" src="about:blank" title="CoolterUB viewer"></iframe>
   </div>
 
   <div id="blankOverlay" class="overlay hidden">

@@ -57,12 +57,15 @@ function escapeAttr(s){
   return String(s).replace(/"/g,'&quot;');
 }
 
+const contentFrame = document.getElementById('content-frame');
+const loadingOverlay = document.getElementById('loading-overlay');
+const useProxyCheckbox = document.getElementById('useProxy');
+
 form.addEventListener('submit', function(e){
   const data = new FormData(form);
   const qs = new URLSearchParams(data).toString();
   const query = data.get('q') || '';
   const engine = engineSelect ? engineSelect.value : 'ddg';
-  // Build engine URL
   const engineUrls = {
     ddg: 'https://duckduckgo.com/?q=',
     google: 'https://www.google.com/search?q=',
@@ -73,7 +76,7 @@ form.addEventListener('submit', function(e){
   e.preventDefault();
   if (!query.trim()){ clearResults(); return; }
 
-  // If inline results are requested and engine is DuckDuckGo, use Instant Answers
+  // Inline DuckDuckGo instant answers
   if (inlineResults && inlineResults.checked && engine === 'ddg'){
     showLoading();
     const apiUrl = 'https://api.duckduckgo.com/?' + new URLSearchParams({q: query, format: 'json', no_html: '1', skip_disambig: '1'});
@@ -84,14 +87,34 @@ form.addEventListener('submit', function(e){
     return;
   }
 
-  // Otherwise, open full results in a new tab (no proxy)
-  const a = document.createElement('a');
-  a.href = targetUrl;
-  a.target = '_blank';
-  a.rel = 'noopener noreferrer';
-  document.body.appendChild(a);
-  a.click();
-  a.remove();
+  // If useProxy is checked, attempt to load via the configured proxy endpoint
+  if (useProxyCheckbox && useProxyCheckbox.checked) {
+    const proxyBase = window.COOLTERUB_PROXY_BASE || '/proxy/fetch'; // default path for local dev or self-host
+    const proxyUrl = proxyBase + '?url=' + encodeURIComponent(targetUrl);
+    loadingOverlay.classList.remove('hidden');
+    contentFrame.src = proxyUrl;
+    // Remove loading after load event
+    contentFrame.onload = () => loadingOverlay.classList.add('hidden');
+    return;
+  }
+
+  // Otherwise, attempt to load directly into iframe. If framing is blocked by target site,
+  // it will likely redirect or show an error; advise users to use proxy or open in new tab.
+  loadingOverlay.classList.remove('hidden');
+  contentFrame.src = targetUrl;
+  // Hide loader when frame finishes loading
+  contentFrame.onload = () => loadingOverlay.classList.add('hidden');
+
+  // If user prefers, also open in new tab
+  if (openInNewTab.checked) {
+    const a = document.createElement('a');
+    a.href = targetUrl;
+    a.target = '_blank';
+    a.rel = 'noopener noreferrer';
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+  }
 });
 
 // Blank-screen toggle (simple overlay, not intended for hiding remote monitoring)
