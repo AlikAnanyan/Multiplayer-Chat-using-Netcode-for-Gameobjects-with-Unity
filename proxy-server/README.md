@@ -17,6 +17,7 @@ Local testing
 Deployment
 - Render: create a new Web Service pointing to this folder, set Node env and `PORT` (Render sets automatically), and add `PROXY_API_KEY` as a secret.
 - Vercel: you can convert `server.js` to a serverless handler or deploy using a compatible platform.
+- Cloudflare Workers (free): prefer using the provided Cloudflare Worker implementation in `proxy-worker/` (fast, free edge hosting). See `proxy-worker/README.md` for steps.
 
 Responsibility
 - You are responsible for hosting and operating this proxy, ensuring compliance with target site Terms of Service, and preventing abuse. Do not use it to evade monitoring or violate policies.

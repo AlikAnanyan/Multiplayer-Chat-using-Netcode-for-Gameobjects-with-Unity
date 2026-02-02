@@ -1,0 +1,10 @@
+name = "coolterub-proxy-worker"
+compatibility_date = "2026-01-01"
+# Fill this with your Cloudflare account id
+account_id = "YOUR_ACCOUNT_ID_HERE"
+# The file with the worker entry point
+main = "worker.js"
+
+[vars]
+# You can set a default proxy API key here, or set it as a secret in Cloudflare dashboard
+# WORKER_API_KEY = "changeme"
